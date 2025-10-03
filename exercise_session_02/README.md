@@ -13,3 +13,8 @@ Currently Loaded Modules:
 2. module avail:    List available modules
 3. module spider:   List all possible modules
 
+
+4. squeue -o "%.5i %.8u %.5Q %.5A %.8j %.6D %.2t %.8R %.8S %.10L"
+JOBID     USER PRIOR JOBID     NAME  NODES ST NODELIST(REASON) START_TI  TIME_LEFT
+57229 cmalosso 81164 57319 aims_arr      1 CG nid001759 10:24:58    5:25:25
+57229 cmalosso 79278 57309 aims_arr      1 CG nid001529 08:34:01    3:34:54
