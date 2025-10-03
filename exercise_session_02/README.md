@@ -18,3 +18,28 @@ Currently Loaded Modules:
 JOBID     USER PRIOR JOBID     NAME  NODES ST NODELIST(REASON) START_TI  TIME_LEFT
 57229 cmalosso 81164 57319 aims_arr      1 CG nid001759 10:24:58    5:25:25
 57229 cmalosso 79278 57309 aims_arr      1 CG nid001529 08:34:01    3:34:54
+
+5. Observations:
+ OMP_NUM_Threads = 10 --> 57321     dhug 25149 57321 dario_ex      1 CG nid002236 11:01:58       4:52
+
+Thread rank: 5
+Thread rank: 0
+Thread rank: 3
+Thread rank: 7
+Thread rank: 1
+Thread rank: 4
+Thread rank: 6
+Thread rank: 2
+Thread rank: 8
+Thread rank: 9
+pi is approximately 3.1415926542564856, Error is 0.0000000006666925
+Computed in 1.248 seconds
+
+
+ OMP_NUM_Threads = 1 --> 57321     dhug 25149 57321 dario_ex      1  R nid002236 11:05:25       4:58
+
+
+Thread rank: 0
+pi is approximately 3.1415926542566006, Error is 0.0000000006668075
+Computed in 4.436 seconds
+
