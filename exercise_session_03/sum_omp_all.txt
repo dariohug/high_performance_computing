@@ -1,0 +1,80 @@
+=====================================
+Running with 1 threads
+Using 1 threads
+sum=10022429073.341873
+Elapsed Time: 1.0837
+=====================================
+Running with 2 threads
+Using 2 threads
+sum=10022429072.974625
+Elapsed Time: 0.5489
+=====================================
+Running with 3 threads
+Using 3 threads
+sum=10022429071.460434
+Elapsed Time: 0.3722
+=====================================
+Running with 4 threads
+Using 4 threads
+sum=10022429071.947245
+Elapsed Time: 0.2793
+=====================================
+Running with 5 threads
+Using 5 threads
+sum=10022429072.291378
+Elapsed Time: 0.2244
+=====================================
+Running with 6 threads
+Using 6 threads
+sum=10022429072.349653
+Elapsed Time: 0.1872
+=====================================
+Running with 7 threads
+Using 7 threads
+sum=10022429072.407928
+Elapsed Time: 0.1627
+=====================================
+Running with 8 threads
+Using 8 threads
+sum=10022429072.466204
+Elapsed Time: 0.1438
+=====================================
+Running with 9 threads
+Using 9 threads
+sum=10022429072.524483
+Elapsed Time: 0.1259
+=====================================
+Running with 10 threads
+Using 10 threads
+sum=10022429072.511417
+Elapsed Time: 0.1142
+=====================================
+Running with 11 threads
+Using 11 threads
+sum=10022429072.462559
+Elapsed Time: 0.1104
+=====================================
+Running with 12 threads
+Using 12 threads
+sum=10022429072.413702
+Elapsed Time: 0.1018
+=====================================
+Running with 13 threads
+Using 13 threads
+sum=10022429072.364845
+Elapsed Time: 0.1032
+=====================================
+Running with 14 threads
+Using 14 threads
+sum=10022429072.315987
+Elapsed Time: 0.0956
+=====================================
+Running with 15 threads
+Using 15 threads
+sum=10022429072.267130
+Elapsed Time: 0.0876
+=====================================
+Running with 16 threads
+Using 16 threads
+sum=10022429072.218266
+Elapsed Time: 0.0945

@@ -52,5 +52,18 @@ millions of elements are looked up.
 
 use fopenmp 
 
+- 1 cpu: 
+sum=10022429073.341873
+Elapsed Time: 1.0837
+
+- 4 cpu's:
+sum=10022429072.089407
+Elapsed Time: 0.1020
+
+- 8 cpu's:
 sum=10022429072.089407
 Elapsed Time: 0.0971
+
+-32 cpu's
+sum=10022429072.089407
+Elapsed Time: 0.098

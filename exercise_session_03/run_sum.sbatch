@@ -1,18 +1,26 @@
 #!/bin/bash
-#SBATCH --job-name=sum_job          # Job name
-#SBATCH --output=sum_output.txt  # Output file (%j = job ID)
-#SBATCH --error=sum_error.txt    # Error file
-#SBATCH --ntasks=1                  # Number of tasks (processes)
-#SBATCH --cpus-per-task=8           # CPU cores per task
-#SBATCH --time=00:10:00             # Max runtime (HH:MM:SS)
-#SBATCH --mem=8G                    # Memory for the job
-#SBATCH --partition=normal          # Partition/queue
+#SBATCH --job-name=sum_omp
+#SBATCH --output=sum_omp_all.txt
+#SBATCH --error=sum_omp_error.txt
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16        # Maximum threads you want to test
+#SBATCH --time=00:20:00
+#SBATCH --mem=8G
+#SBATCH --partition=normal
 
-# Load compiler module
 module load gcc-native/12.3
 
-# Compile your program
-cc -O3 -fopenmp -o sum sum.c get_time.c -lm
+# Compile the program with OpenMP
+cc -O3 -fopenmp -o sum_omp sum.c get_time.c -lm
 
-# Run your program
-./sum
+# List of thread counts to test
+THREADS=(1 2 4 8 16)
+
+# Loop over thread counts
+for NTHREADS in "${THREADS[@]}"; do
+    echo "=====================================" >> sum_omp_all.txt
+    echo "Running with $NTHREADS threads" >> sum_omp_all.txt
+    export OMP_NUM_THREADS=$NTHREADS
+    ./sum_omp >> sum_omp_all.txt
+done
+
