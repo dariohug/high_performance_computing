@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <math.h>
 #include "get_time.h"
+#include "omp.h" 
 
 typedef struct {
     float x;
@@ -22,8 +23,11 @@ int main(int argc, char *argv[]) {
 
     data = malloc(N * sizeof(coord));
     assert(data);
-    
+
+    // Except the sum calculation, each operation can be done in paralell
+
     sum = 0.0;
+#pragma omp parallel for reduction(+:sum) 
     for(i=0; i<N; ++i) {
         data[i].x = i & 31;
         data[i].y = i & 63;

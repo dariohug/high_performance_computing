@@ -48,3 +48,9 @@ sum += sqrt(data[i].r2);
 millions of elements are looked up. 
 -> Bottleneck is memory bandwidth. 
 
+--> Further Optimization with paralellism: 
+
+use fopenmp 
+
+sum=10022429072.089407
+Elapsed Time: 0.0971
