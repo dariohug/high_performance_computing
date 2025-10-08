@@ -9,3 +9,42 @@ difference is ~.2 s. This is the time it takes to set up mpi. This time we
 we will not be able to optimize since its fixed. 
 
 
+Part 2: 
+
+Flag -O0:
+
+sum=10022429073.341873
+Elapsed Time: 6.0800
+
+Also this version i needed more allocated memory on the task. 
+
+Flag -O1: 
+
+sum=10022429073.341873
+Elapsed Time: 0.7158
+
+Flag -O2:
+
+sum=10022429073.341873
+Elapsed Time: 0.7226
+
+Flag -03: 
+sum=10022429073.341873
+Elapsed Time: 0.7159
+
+-> Performance difference between O0 and O1 is huge.
+-> After that there seems to be no time difference between different optimization flags?
+-> This would hint that the bottleneck is not CPU time. Would make sence,
+the arithmetic is quite simple but we touch a lot of memory in the program: 
+
+"""
+data[i].x = i & 31;
+data[i].y = i & 63;
+data[i].z = i & 15;
+data[i].r2 = data[i].x*data[i].x + data[i].y*data[i].y + data[i].z*data[i].z;
+sum += sqrt(data[i].r2);
+"""
+
+millions of elements are looked up. 
+-> Bottleneck is memory bandwidth. 
+
