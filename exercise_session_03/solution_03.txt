@@ -1,0 +1,11 @@
+Part 1: 
+
+pi is approximately 3.1415926555899709, Error is 0.0000000020001778
+Computed in 1.48 seconds
+Elapsed time with Init: 1.6091268062591553
+
+
+difference is ~.2 s. This is the time it takes to set up mpi. This time we
+we will not be able to optimize since its fixed. 
+
+
