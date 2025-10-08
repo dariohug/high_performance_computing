@@ -67,3 +67,9 @@ Elapsed Time: 0.0971
 -32 cpu's
 sum=10022429072.089407
 Elapsed Time: 0.098
+
+Superlinear Speedup: 
+- This can happen when splitting up the Process into multiple threads, divides the computation time
+by more than the number of threads. One reason could be that the division of the task also reduces
+another factor, like the amount of memory acces that the program needs. Combined caches could also
+allow for f.e. SIMD if the siye of the threads causes the needed lenght of the needed data optimal. 
