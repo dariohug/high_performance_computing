@@ -1,0 +1,15 @@
+Permissions:
+-on another users file: drwx------ 2 66019 large-sc-2 4096 Sep 17 18:15 melleby/
+- dhug@eiger-ln001 users]$ touch juhu.txt
+touch: cannot touch 'juhu.txt': Permission denied
+- cd meberlei bash: cd: meberlei: Permission denied
+- drwx------ 2 meberlei uzh8 4096 Oct 16 16:45 meberlei/
+
+Changing permissions: 
+- [eiger][dhug@eiger-ln001 exercise_session_04]$ chmod 700 permission_test.txt 
+[eiger][dhug@eiger-ln001 exercise_session_04]$ ls -l 
+total 0
+-rwx------ 1 dhug uzh8 0 Oct 16 17:03 permission_test.txt
+
+
+
