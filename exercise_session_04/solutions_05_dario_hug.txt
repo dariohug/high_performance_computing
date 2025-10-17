@@ -12,4 +12,10 @@ total 0
 -rwx------ 1 dhug uzh8 0 Oct 16 17:03 permission_test.txt
 
 
-
+Grep Regex Expressions: 
+- End with 00: grep -E "^[01]*00$"
+-1 nd with `00`                    | `^[01]*00$`                 |
+ 2 Start and end with `1`          | `^1[01]*1$`                 |
+ 3 Contain `110`                   | `^[01]*110[01]*$`           |
+ 4 At least three `1`s             | `^[01]*1[01]*1[01]*1[01]*$` |
+ 5 At least three consecutive `1`s | `^[01]*111[01]*$`           |
