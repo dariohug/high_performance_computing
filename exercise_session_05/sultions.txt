@@ -8,3 +8,9 @@
 
 -- norm_diff() -> Computes norm of the difference between two matrices. 
 		Returns it as a doule  
+
+Time Difference for the jacobi solvers between OMP_enabled and not: 
+- Normal: 30.2s
+- OMP 1 Thread: 2.70s 
+- OMP 4 Threads: 2.47s 
+- OMP 24 Threads: 4.8s 

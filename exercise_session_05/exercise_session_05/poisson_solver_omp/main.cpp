@@ -1,0 +1,62 @@
+#include "io.h"
+#include "init.h"
+#include "jacobi.h"
+#include "omp.h"
+
+int main (int argc, char *argv[]){
+
+    const char* file_name="params.txt";
+
+    // Read the parameter file and store information in a params structure (defined in init.h)
+    params p;
+    readParameters(file_name, &p);
+    
+    // Initialize the matrices used in the Jacobi iteration
+    double **f, **u_old, **u_new;
+    
+    // First allocate memory for each matrix
+    f = allocateGrid(p.nx, p.ny, f);
+    u_old = allocateGrid(p.nx, p.ny, u_old);
+    u_new = allocateGrid(p.nx, p.ny, u_new);
+    
+    // Initialize the value of matrices
+    init_variables(p, f, u_old, u_new);
+    
+    // Output the source term of the Poisson equation in a csv file
+    output_source(p, f);
+    
+    // Do a first jacobi step
+    jacobi_step(p, u_new, u_old, f);
+    
+    
+    // Compute differences and norm
+    double diff = norm_diff(p, u_new, u_old);
+    printf("%f\n", diff);
+    printf("%f\n", p.tol);
+    
+    // Initialize the Jacobi step conter
+    int nstep=1;
+
+    double t_start = omp_get_wtime();
+    
+    // Main loop for the Jacobi iterations
+    while (diff>p.tol && nstep<p.nstep_max){
+        jacobi_step(p, u_new, u_old, f);
+        diff = norm_diff(p, u_new, u_old);
+        
+        // Update u_old to u_new for next iteration
+        for(int i = 0; i < p.nx; i++){
+            for(int j = 0; j < p.ny; j++){
+                u_old[i][j] = u_new[i][j];
+            }
+        }
+        
+        nstep++;
+        // printf("Step %d, Diff=%g\n", nstep, diff);
+        if (nstep%p.foutput==0)
+         output(p, nstep, u_new);
+    }
+double t_end = omp_get_wtime();
+printf("Jacobi solver omp enhanced finished in %g seconds\n", t_end - t_start);
+return 0;
+}
