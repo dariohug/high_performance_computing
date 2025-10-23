@@ -1,0 +1,10 @@
+1. 
+-- Init_f() -> Initialize the source term
+
+
+-- jacobi_step() -> Compute a Jacobi iteration to solve Poisson equation. 
+		This function updates u_new and u_old in-place. 
+
+
+-- norm_diff() -> Computes norm of the difference between two matrices. 
+		Returns it as a doule  
