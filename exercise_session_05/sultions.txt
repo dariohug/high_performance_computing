@@ -14,3 +14,56 @@ Time Difference for the jacobi solvers between OMP_enabled and not:
 - OMP 1 Thread: 2.70s 
 - OMP 4 Threads: 2.47s 
 - OMP 24 Threads: 4.8s 
+
+
+3. 
+
+Running on one thread: 
+Size of integer array/file: 1000000
+max number in file: 38747
+number of 0s in file: 646016
+true number of 0s in file: 646016
+
+
+Running on 4 threads: 
+Size of integer array/file: 1000000
+max number in file: 38747
+number of 0s in file: 646016
+true number of 0s in file: 646016
+
+Running on 16 Threads: 
+Size of integer array/file: 1000000
+max number in file: 38747
+number of 0s in file: 646016
+true number of 0s in file: 646016
+
+
+Part II: 
+
+1 Thread: 
+Size of integer array/file: 1000000
+max number in file: 38747
+Number of threads used for max loop: 1
+number of 0s in file: 646016
+true number of 0s in file: 646016
+Number of threads used for max loop: 1
+
+
+4 Threads:
+Size of integer array/file: 1000000
+max number in file: 38747
+Number of threads used for max loop: 4
+number of 0s in file: 161631
+true number of 0s in file: 646016
+Number of threads used for max loop: 4
+
+
+Part III: 
+
+Prgamna should be placed around the update of the shared variable inside the loop.
+
+Why reduction is better: avoids serializing the entire loop and
+still combining thread results safely.
+
+
+Code does not compile in serial because i print the number of threads. 
