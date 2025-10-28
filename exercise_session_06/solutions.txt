@@ -49,3 +49,12 @@ I am processor 1 out of 4, my left neighbor is 0, the sum is 6 and it took me 0.
 
 -> The nonblocking code has less risk of locking up. It is a bit more flexible and forgiving. 
 
+Using a cartesian communicator. 
+
+srun -n 4 ring_3
+Process 1 (cart rank 1): left=0, right=2, sum=6, time=0.000083 sec
+Process 2 (cart rank 2): left=1, right=3, sum=6, time=0.000083 sec
+Process 0 (cart rank 0): left=3, right=1, sum=6, time=0.000078 sec
+Process 3 (cart rank 3): left=2, right=0, sum=6, time=0.000086 sec
+
+This is a lot simpler and more robust since we rely on a general solution by MPI. 
