@@ -24,5 +24,28 @@ I am processor 2 out of 4, my left neighbor is 1 and the sum is 6
 I am processor 3 out of 4, my left neighbor is 2 and the sum is 6
 I am processor 0 out of 4, my left neighbor is 3 and the sum is 6
 
+MPI non-blocking send / recv:
 
+- Irecv() -> Isend() -> Waitall 
+
+srun -n 4 ./ring_2
+srun: job 5891913 queued and waiting for resources
+srun: job 5891913 has been allocated resources
+I am processor 0 out of 4, my left neighbor is 3, the sum is 6 and it took me 0.000090 seconds
+I am processor 1 out of 4, my left neighbor is 0, the sum is 6 and it took me 0.000094 seconds
+I am processor 3 out of 4, my left neighbor is 2, the sum is 6 and it took me 0.000085 seconds
+I am processor 2 out of 4, my left neighbor is 1, the sum is 6 and it took me 0.000078 seconds
+
+
+
+- Isend() -> Irecv -> Waitall 
+
+srun -n 4 ./ring_2
+I am processor 0 out of 4, my left neighbor is 3, the sum is 6 and it took me 0.000081 seconds
+I am processor 2 out of 4, my left neighbor is 1, the sum is 6 and it took me 0.000080 seconds
+I am processor 3 out of 4, my left neighbor is 2, the sum is 6 and it took me 0.000073 seconds
+I am processor 1 out of 4, my left neighbor is 0, the sum is 6 and it took me 0.000079 seconds
+
+
+-> The nonblocking code has less risk of locking up. It is a bit more flexible and forgiving. 
 
