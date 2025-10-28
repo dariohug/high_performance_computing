@@ -58,3 +58,14 @@ Process 0 (cart rank 0): left=3, right=1, sum=6, time=0.000078 sec
 Process 3 (cart rank 3): left=2, right=0, sum=6, time=0.000086 sec
 
 This is a lot simpler and more robust since we rely on a general solution by MPI. 
+
+
+Exercise 2: Pi
+
+srun: job 5892511 queued and waiting for resources
+srun: job 5892511 has been allocated resources
+π ≈ 3.141592652588050
+
+srun -n 16 paralell 
+number of processes: 16
+π ≈ 3.141592652590205
