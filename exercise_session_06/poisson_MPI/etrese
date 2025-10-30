@@ -1,0 +1,1323 @@
+
+--------------------------------------------------------------------
+  cray-mpich: cray-mpich/8.1.28
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "cray-mpich/8.1.28" module is available to load.
+
+      cray/23.12  aocc/4.1.0
+      cray/23.12  cce/17.0.0
+      cray/23.12  craype-network-ofi
+      cray/23.12  gcc-native/12.3
+      cray/23.12  intel-classic/2023.2.0
+      cray/23.12  intel-classic/2024.0
+      cray/23.12  intel-oneapi/2023.2.0
+      cray/23.12  intel-oneapi/2024.0
+      cray/23.12  intel/2023.2.0
+      cray/23.12  intel/2024.0
+ 
+    Help:
+      
+      
+      				  COPYRIGHT
+      
+      The following is a notice of limited availability of the code, and disclaimer
+      which must be included in the prologue of the code and in all source listings
+      of the code.
+      
+      Copyright Notice
+       + 2002 University of Chicago
+      
+      Permission is hereby granted to use, reproduce, prepare derivative works, and
+      to redistribute to others.  This software was authored by:
+      
+      Mathematics and Computer Science Division
+      Argonne National Laboratory, Argonne IL 60439
+      
+      (and)
+      
+      Department of Computer Science
+      University of Illinois at Urbana-Champaign
+      
+      
+      			      GOVERNMENT LICENSE
+      
+      Portions of this material resulted from work developed under a U.S.
+      Government Contract and are subject to the following license: the Government
+      is granted for itself and others acting on its behalf a paid-up, nonexclusive,
+      irrevocable worldwide license in this computer software to reproduce, prepare
+      derivative works, and perform publicly and display publicly.
+      
+      				  DISCLAIMER
+      
+      This computer code material was prepared, in part, as an account of work
+      sponsored by an agency of the United States Government.  Neither the United
+      States, nor the University of Chicago, nor any of their employees, makes any
+      warranty express or implied, or assumes any legal liability or responsibility
+      for the accuracy, completeness, or usefulness of any information, apparatus,
+      product, or process disclosed, or represents that its use would not infringe
+      privately owned rights.
+      
+      
+      Cray MPICH 8.1.28:
+      =======================================
+      
+      Release Date:
+      -------------
+        November 16, 2023
+      
+      
+      Purpose:
+      --------
+        Cray MPICH 8.1.28 is based upon ANL MPICH 3.4a2 with support for libfabric
+        and is optimized for the Cray Programming Environment.
+          
+        Major Differences Cray MPICH 8.1.28 from the XC Cray MPICH include:
+      
+            - Uses the new ANL MPICH CH4 code path and libfabric for network
+              support.
+      
+            - Does not support -default64 mode for Fortran
+      
+            - Does not support C++ language bindings
+      
+        New Cray MPICH features for HPE Cray EX and Apollo systems:
+            - Starting from the 8.1.26 release, Cray MPICH supports the Intel Sapphire Rapids CPU HBM 
+              processor architecture.
+      
+            - On systems with AMD GPUs, Cray MPICH 8.1.26 supports all ROCm
+              versions starting from ROCm 5.0, including the latest ROCm 5.5.0 
+              release. 
+       
+              The Cray MPICH 8.1.25 release and prior versions of 
+              Cray MPICH are only compatible with ROCm versions up to (and 
+              including) the ROCm 5.4.0 release.
+      
+            - Cray MPICH uses the libfabric "verbs;ofi_rxm" provider by default.
+              This is the supported and optimized OFI libfabric provider for
+              Slingshot-10 and Apollo systems.
+      
+            - Cray MPICH offers support for multiple NICs per node. Starting with
+              version 8.0.8, by default Cray MPICH will use all available NICs on
+              a node. Several rank-to-NIC assignment policies are supported. For
+              details on choosing a policy for assigning ranks to NICS, or for
+              selecting a subset of available NICs, please see the following
+              environment variables documented in the mpi man page.
+      
+              MPICH_OFI_NIC_VERBOSE
+              MPICH_OFI_NIC_POLICY
+              MPICH_OFI_NIC_MAPPING
+              MPICH_OFI_NUM_NICS
+      
+            - Enhancements to the MPICH_OFI_NIC_POLICY NUMA mode have been added.
+              Starting with version 8.0.14, if the user selects the NUMA policy,
+              the NIC closest to the rank is selected. A NIC no longer needs to
+              reside in the same numa node as the rank. If multiple NICs are
+              assigned to the same numa node, the local ranks will round-robin
+              between them. Numa distances are analyzed to select the closest NIC.
+      
+            - Cray MPICH supports creating a full connection grid during MPI_Init.
+              By default, OFI connections between ranks are set up on demand. This
+              allows for optimal performance while minimizing memory requirements.
+              However, for jobs requiring an all-to-all communication pattern, it
+              may be beneficial to create all OFI connections in a coordinated
+              manner at startup. See the MPICH_OFI_STARTUP_CONNECT description in
+              the mpi man page.
+      
+            - Cray MPICH supports runtime switching to the UCX netmod starting
+              with version 8.0.14. To do this load the craype-network-ucx module
+              and module swap between Cray-MPICH and Cray-MPICH-UCX modules.  For
+              more information including relevant environment variables reference
+              the intro_mpi man page with the Cray-MPICH-UCX module loaded.
+      
+            - Lmod support for HPE Cray EX starting with Cray MPICH 8.0.16.
+      
+      
+      Key Changes and Bugs Closed:
+      ----------------------------
+      
+         Changes in Cray MPICH 8.1.28
+      
+           New Features:
+      
+              - Cray MPICH 8.1.28 for aarch64 is in early stage of support and
+                has some issues. Setting these variables will help circumvent most
+                known issues.
+      
+                  export MPICH_SMP_SINGLE_COPY_MODE=CMA
+                  export MPICH_MALLOC_FALLBACK=1
+      
+           Bugs Fixed:
+      
+              - CAST-25354 - Add routines for querying GPU support
+              - CAST-28969 - Remove build directory rpath entries for Cray MPICH libraries
+              - CAST-33808 - Bugfix for cray-mpich-abi-pre-intel-5.0 module file
+              - CAST-34143 - Handle disparate access to XPMEM
+              - CAST-34244 - Add the MPI_T error codes to the MPICH error printer
+              - PE-48382   - Align write and read cb buffers to page size for direct_io
+              - PE-49623   - Fix triggerd op send/recv_init() code to handle sparse types
+              - PE-49624   - Fix the triggered op code to only call getenv() once
+              - PE-49625   - Return errors when triggered ops aren't supported
+              - PE-49626   - Add more error checking to trigger ops code
+              - PE-49708   - Support native sles gcc rather than Cray-gcc
+              - PE-50090   - Add error message for MPI_Open_port() without fabric support
+              - PE-50833   - Add an additional CXI counter to MPI's default set 
+              - PE-50150   - Improve handling of truncated CXI receives
+      
+      
+      Product and OS Dependencies:
+      ----------------------------
+        The Cray MPICH 8.1.28 release is supported on the following HPE systems:
+        * HPE Cray EX systems with CLE
+        * HPE Apollo systems as part of the Cray Programming Environment
+      
+        Product and OS Dependencies by network type:
+        --------------------------------------------------+
+                                    |       Shasta        |
+        ----------------------------+---------------------+
+              craype                | >= 2.7.6            |
+        ----------------------------+---------------------+
+              cray-pals             | >= 1.0.6            |
+        ----------------------------+---------------------+
+              cray-pmi              | >= 6.0.1            |
+        ----------------------------+---------------------+
+              libfabric             | >= 1.9.0            |
+        ----------------------------+---------------------+
+      
+        One or more compilers:
+        * AMD ROCM 5.0 or later
+        * AOCC 4.1 or later
+        * CCE 17.0 or later
+        * GNU 12.3 or later
+        * Intel 2022.1 or later
+        * Nvidia 23.3 or later
+      
+      
+      Notes and Limitations:
+      ----------------------
+        Limitations in Cray MPICH 8.1.28:
+      
+            - Cray MPICH 8.1.28 can support only ~2040 simultaneous MPI
+              communicators.  This limit is less the XC Cray MPICH limit of
+              ~4090 simultaneous communicators.  Cray intends to raise the
+              limit in a future release of Cray MPICH for Shasta to at least
+              the XC limit.
+      
+      
+      Documentation:
+      --------------
+        For more information see the intro_mpi man page.
+      
+      
+      Modulefile:
+      -----------
+        module load cray-mpich/8.1.28
+      
+      
+      License:
+      --------
+        Except for the third party components and software licensed by HPE
+        through proprietary agreements, components, files or programs contained
+        within this package or product are Copyright -2021 Hewlett Packard
+        Enterprise Development LP.
+      
+        Attribution notices for open source licensed software for this 
+        package are detailed in the file:
+        /opt/cray/pe/mpich/8.1.28/ATTRIBUTIONS
+        Copyright -2023 Hewlett Packard Enterprise Development LP
+      
+      
+      ===================================================================
+      To re-display cray-mpich/8.1.28 copyright information,
+      type:    less /opt/cray/pe/mpich/8.1.28/COPYRIGHT
+      To re-display cray-mpich/8.1.28 release information,
+      type:    less /opt/cray/pe/mpich/8.1.28/release_info
+      ===================================================================
+      
+      
+
+
+--------------------------------------------------------------------
+  cray-mpich-abi: cray-mpich-abi/8.1.28
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "cray-mpich-abi/8.1.28" module is available to load.
+
+      cray/23.12  aocc/4.1.0
+      cray/23.12  cce/17.0.0
+      cray/23.12  craype-network-ofi
+      cray/23.12  gcc-native/12.3
+      cray/23.12  intel-classic/2023.2.0
+      cray/23.12  intel-classic/2024.0
+      cray/23.12  intel-oneapi/2023.2.0
+      cray/23.12  intel-oneapi/2024.0
+      cray/23.12  intel/2023.2.0
+      cray/23.12  intel/2024.0
+ 
+    Help:
+      
+      
+      				  COPYRIGHT
+      
+      The following is a notice of limited availability of the code, and disclaimer
+      which must be included in the prologue of the code and in all source listings
+      of the code.
+      
+      Copyright Notice
+       + 2002 University of Chicago
+      
+      Permission is hereby granted to use, reproduce, prepare derivative works, and
+      to redistribute to others.  This software was authored by:
+      
+      Mathematics and Computer Science Division
+      Argonne National Laboratory, Argonne IL 60439
+      
+      (and)
+      
+      Department of Computer Science
+      University of Illinois at Urbana-Champaign
+      
+      
+      			      GOVERNMENT LICENSE
+      
+      Portions of this material resulted from work developed under a U.S.
+      Government Contract and are subject to the following license: the Government
+      is granted for itself and others acting on its behalf a paid-up, nonexclusive,
+      irrevocable worldwide license in this computer software to reproduce, prepare
+      derivative works, and perform publicly and display publicly.
+      
+      				  DISCLAIMER
+      
+      This computer code material was prepared, in part, as an account of work
+      sponsored by an agency of the United States Government.  Neither the United
+      States, nor the University of Chicago, nor any of their employees, makes any
+      warranty express or implied, or assumes any legal liability or responsibility
+      for the accuracy, completeness, or usefulness of any information, apparatus,
+      product, or process disclosed, or represents that its use would not infringe
+      privately owned rights.
+      
+      
+      Cray MPICH 8.1.28:
+      =======================================
+      
+      Release Date:
+      -------------
+        November 16, 2023
+      
+      
+      Purpose:
+      --------
+        Cray MPICH 8.1.28 is based upon ANL MPICH 3.4a2 with support for libfabric
+        and is optimized for the Cray Programming Environment.
+          
+        Major Differences Cray MPICH 8.1.28 from the XC Cray MPICH include:
+      
+            - Uses the new ANL MPICH CH4 code path and libfabric for network
+              support.
+      
+            - Does not support -default64 mode for Fortran
+      
+            - Does not support C++ language bindings
+      
+        New Cray MPICH features for HPE Cray EX and Apollo systems:
+            - Starting from the 8.1.26 release, Cray MPICH supports the Intel Sapphire Rapids CPU HBM 
+              processor architecture.
+      
+            - On systems with AMD GPUs, Cray MPICH 8.1.26 supports all ROCm
+              versions starting from ROCm 5.0, including the latest ROCm 5.5.0 
+              release. 
+       
+              The Cray MPICH 8.1.25 release and prior versions of 
+              Cray MPICH are only compatible with ROCm versions up to (and 
+              including) the ROCm 5.4.0 release.
+      
+            - Cray MPICH uses the libfabric "verbs;ofi_rxm" provider by default.
+              This is the supported and optimized OFI libfabric provider for
+              Slingshot-10 and Apollo systems.
+      
+            - Cray MPICH offers support for multiple NICs per node. Starting with
+              version 8.0.8, by default Cray MPICH will use all available NICs on
+              a node. Several rank-to-NIC assignment policies are supported. For
+              details on choosing a policy for assigning ranks to NICS, or for
+              selecting a subset of available NICs, please see the following
+              environment variables documented in the mpi man page.
+      
+              MPICH_OFI_NIC_VERBOSE
+              MPICH_OFI_NIC_POLICY
+              MPICH_OFI_NIC_MAPPING
+              MPICH_OFI_NUM_NICS
+      
+            - Enhancements to the MPICH_OFI_NIC_POLICY NUMA mode have been added.
+              Starting with version 8.0.14, if the user selects the NUMA policy,
+              the NIC closest to the rank is selected. A NIC no longer needs to
+              reside in the same numa node as the rank. If multiple NICs are
+              assigned to the same numa node, the local ranks will round-robin
+              between them. Numa distances are analyzed to select the closest NIC.
+      
+            - Cray MPICH supports creating a full connection grid during MPI_Init.
+              By default, OFI connections between ranks are set up on demand. This
+              allows for optimal performance while minimizing memory requirements.
+              However, for jobs requiring an all-to-all communication pattern, it
+              may be beneficial to create all OFI connections in a coordinated
+              manner at startup. See the MPICH_OFI_STARTUP_CONNECT description in
+              the mpi man page.
+      
+            - Cray MPICH supports runtime switching to the UCX netmod starting
+              with version 8.0.14. To do this load the craype-network-ucx module
+              and module swap between Cray-MPICH and Cray-MPICH-UCX modules.  For
+              more information including relevant environment variables reference
+              the intro_mpi man page with the Cray-MPICH-UCX module loaded.
+      
+            - Lmod support for HPE Cray EX starting with Cray MPICH 8.0.16.
+      
+      
+      Key Changes and Bugs Closed:
+      ----------------------------
+      
+         Changes in Cray MPICH 8.1.28
+      
+           New Features:
+      
+              - Cray MPICH 8.1.28 for aarch64 is in early stage of support and
+                has some issues. Setting these variables will help circumvent most
+                known issues.
+      
+                  export MPICH_SMP_SINGLE_COPY_MODE=CMA
+                  export MPICH_MALLOC_FALLBACK=1
+      
+           Bugs Fixed:
+      
+              - CAST-25354 - Add routines for querying GPU support
+              - CAST-28969 - Remove build directory rpath entries for Cray MPICH libraries
+              - CAST-33808 - Bugfix for cray-mpich-abi-pre-intel-5.0 module file
+              - CAST-34143 - Handle disparate access to XPMEM
+              - CAST-34244 - Add the MPI_T error codes to the MPICH error printer
+              - PE-48382   - Align write and read cb buffers to page size for direct_io
+              - PE-49623   - Fix triggerd op send/recv_init() code to handle sparse types
+              - PE-49624   - Fix the triggered op code to only call getenv() once
+              - PE-49625   - Return errors when triggered ops aren't supported
+              - PE-49626   - Add more error checking to trigger ops code
+              - PE-49708   - Support native sles gcc rather than Cray-gcc
+              - PE-50090   - Add error message for MPI_Open_port() without fabric support
+              - PE-50833   - Add an additional CXI counter to MPI's default set 
+              - PE-50150   - Improve handling of truncated CXI receives
+      
+      
+      Product and OS Dependencies:
+      ----------------------------
+        The Cray MPICH 8.1.28 release is supported on the following HPE systems:
+        * HPE Cray EX systems with CLE
+        * HPE Apollo systems as part of the Cray Programming Environment
+      
+        Product and OS Dependencies by network type:
+        --------------------------------------------------+
+                                    |       Shasta        |
+        ----------------------------+---------------------+
+              craype                | >= 2.7.6            |
+        ----------------------------+---------------------+
+              cray-pals             | >= 1.0.6            |
+        ----------------------------+---------------------+
+              cray-pmi              | >= 6.0.1            |
+        ----------------------------+---------------------+
+              libfabric             | >= 1.9.0            |
+        ----------------------------+---------------------+
+      
+        One or more compilers:
+        * AMD ROCM 5.0 or later
+        * AOCC 4.1 or later
+        * CCE 17.0 or later
+        * GNU 12.3 or later
+        * Intel 2022.1 or later
+        * Nvidia 23.3 or later
+      
+      
+      Notes and Limitations:
+      ----------------------
+        Limitations in Cray MPICH 8.1.28:
+      
+            - Cray MPICH 8.1.28 can support only ~2040 simultaneous MPI
+              communicators.  This limit is less the XC Cray MPICH limit of
+              ~4090 simultaneous communicators.  Cray intends to raise the
+              limit in a future release of Cray MPICH for Shasta to at least
+              the XC limit.
+      
+      
+      Documentation:
+      --------------
+        For more information see the intro_mpi man page.
+      
+      
+      Modulefile:
+      -----------
+        module load cray-mpich/8.1.28
+      
+      
+      License:
+      --------
+        Except for the third party components and software licensed by HPE
+        through proprietary agreements, components, files or programs contained
+        within this package or product are Copyright -2021 Hewlett Packard
+        Enterprise Development LP.
+      
+        Attribution notices for open source licensed software for this 
+        package are detailed in the file:
+        /opt/cray/pe/mpich/8.1.28/ATTRIBUTIONS
+        Copyright -2023 Hewlett Packard Enterprise Development LP
+      
+      
+      ===================================================================
+      To re-display cray-mpich-abi/8.1.28 copyright information,
+      type:    less /opt/cray/pe/mpich/8.1.28/COPYRIGHT
+      To re-display cray-mpich-abi/8.1.28 release information,
+      type:    less /opt/cray/pe/mpich/8.1.28/release_info
+      ===================================================================
+      
+      
+
+
+--------------------------------------------------------------------
+  cray-mpich-abi-pre-intel-5.0: cray-mpich-abi-pre-intel-5.0/8.1.28
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "cray-mpich-abi-pre-intel-5.0/8.1.28" module is available to load.
+
+      cray/23.12  intel-classic/2023.2.0
+      cray/23.12  intel-classic/2024.0
+      cray/23.12  intel-oneapi/2023.2.0
+      cray/23.12  intel-oneapi/2024.0
+      cray/23.12  intel/2023.2.0
+      cray/23.12  intel/2024.0
+ 
+    Help:
+      
+      
+      				  COPYRIGHT
+      
+      The following is a notice of limited availability of the code, and disclaimer
+      which must be included in the prologue of the code and in all source listings
+      of the code.
+      
+      Copyright Notice
+       + 2002 University of Chicago
+      
+      Permission is hereby granted to use, reproduce, prepare derivative works, and
+      to redistribute to others.  This software was authored by:
+      
+      Mathematics and Computer Science Division
+      Argonne National Laboratory, Argonne IL 60439
+      
+      (and)
+      
+      Department of Computer Science
+      University of Illinois at Urbana-Champaign
+      
+      
+      			      GOVERNMENT LICENSE
+      
+      Portions of this material resulted from work developed under a U.S.
+      Government Contract and are subject to the following license: the Government
+      is granted for itself and others acting on its behalf a paid-up, nonexclusive,
+      irrevocable worldwide license in this computer software to reproduce, prepare
+      derivative works, and perform publicly and display publicly.
+      
+      				  DISCLAIMER
+      
+      This computer code material was prepared, in part, as an account of work
+      sponsored by an agency of the United States Government.  Neither the United
+      States, nor the University of Chicago, nor any of their employees, makes any
+      warranty express or implied, or assumes any legal liability or responsibility
+      for the accuracy, completeness, or usefulness of any information, apparatus,
+      product, or process disclosed, or represents that its use would not infringe
+      privately owned rights.
+      
+      
+      Cray MPICH 8.1.28:
+      =======================================
+      
+      Release Date:
+      -------------
+        November 16, 2023
+      
+      
+      Purpose:
+      --------
+        Cray MPICH 8.1.28 is based upon ANL MPICH 3.4a2 with support for libfabric
+        and is optimized for the Cray Programming Environment.
+          
+        Major Differences Cray MPICH 8.1.28 from the XC Cray MPICH include:
+      
+            - Uses the new ANL MPICH CH4 code path and libfabric for network
+              support.
+      
+            - Does not support -default64 mode for Fortran
+      
+            - Does not support C++ language bindings
+      
+        New Cray MPICH features for HPE Cray EX and Apollo systems:
+            - Starting from the 8.1.26 release, Cray MPICH supports the Intel Sapphire Rapids CPU HBM 
+              processor architecture.
+      
+            - On systems with AMD GPUs, Cray MPICH 8.1.26 supports all ROCm
+              versions starting from ROCm 5.0, including the latest ROCm 5.5.0 
+              release. 
+       
+              The Cray MPICH 8.1.25 release and prior versions of 
+              Cray MPICH are only compatible with ROCm versions up to (and 
+              including) the ROCm 5.4.0 release.
+      
+            - Cray MPICH uses the libfabric "verbs;ofi_rxm" provider by default.
+              This is the supported and optimized OFI libfabric provider for
+              Slingshot-10 and Apollo systems.
+      
+            - Cray MPICH offers support for multiple NICs per node. Starting with
+              version 8.0.8, by default Cray MPICH will use all available NICs on
+              a node. Several rank-to-NIC assignment policies are supported. For
+              details on choosing a policy for assigning ranks to NICS, or for
+              selecting a subset of available NICs, please see the following
+              environment variables documented in the mpi man page.
+      
+              MPICH_OFI_NIC_VERBOSE
+              MPICH_OFI_NIC_POLICY
+              MPICH_OFI_NIC_MAPPING
+              MPICH_OFI_NUM_NICS
+      
+            - Enhancements to the MPICH_OFI_NIC_POLICY NUMA mode have been added.
+              Starting with version 8.0.14, if the user selects the NUMA policy,
+              the NIC closest to the rank is selected. A NIC no longer needs to
+              reside in the same numa node as the rank. If multiple NICs are
+              assigned to the same numa node, the local ranks will round-robin
+              between them. Numa distances are analyzed to select the closest NIC.
+      
+            - Cray MPICH supports creating a full connection grid during MPI_Init.
+              By default, OFI connections between ranks are set up on demand. This
+              allows for optimal performance while minimizing memory requirements.
+              However, for jobs requiring an all-to-all communication pattern, it
+              may be beneficial to create all OFI connections in a coordinated
+              manner at startup. See the MPICH_OFI_STARTUP_CONNECT description in
+              the mpi man page.
+      
+            - Cray MPICH supports runtime switching to the UCX netmod starting
+              with version 8.0.14. To do this load the craype-network-ucx module
+              and module swap between Cray-MPICH and Cray-MPICH-UCX modules.  For
+              more information including relevant environment variables reference
+              the intro_mpi man page with the Cray-MPICH-UCX module loaded.
+      
+            - Lmod support for HPE Cray EX starting with Cray MPICH 8.0.16.
+      
+      
+      Key Changes and Bugs Closed:
+      ----------------------------
+      
+         Changes in Cray MPICH 8.1.28
+      
+           New Features:
+      
+              - Cray MPICH 8.1.28 for aarch64 is in early stage of support and
+                has some issues. Setting these variables will help circumvent most
+                known issues.
+      
+                  export MPICH_SMP_SINGLE_COPY_MODE=CMA
+                  export MPICH_MALLOC_FALLBACK=1
+      
+           Bugs Fixed:
+      
+              - CAST-25354 - Add routines for querying GPU support
+              - CAST-28969 - Remove build directory rpath entries for Cray MPICH libraries
+              - CAST-33808 - Bugfix for cray-mpich-abi-pre-intel-5.0 module file
+              - CAST-34143 - Handle disparate access to XPMEM
+              - CAST-34244 - Add the MPI_T error codes to the MPICH error printer
+              - PE-48382   - Align write and read cb buffers to page size for direct_io
+              - PE-49623   - Fix triggerd op send/recv_init() code to handle sparse types
+              - PE-49624   - Fix the triggered op code to only call getenv() once
+              - PE-49625   - Return errors when triggered ops aren't supported
+              - PE-49626   - Add more error checking to trigger ops code
+              - PE-49708   - Support native sles gcc rather than Cray-gcc
+              - PE-50090   - Add error message for MPI_Open_port() without fabric support
+              - PE-50833   - Add an additional CXI counter to MPI's default set 
+              - PE-50150   - Improve handling of truncated CXI receives
+      
+      
+      Product and OS Dependencies:
+      ----------------------------
+        The Cray MPICH 8.1.28 release is supported on the following HPE systems:
+        * HPE Cray EX systems with CLE
+        * HPE Apollo systems as part of the Cray Programming Environment
+      
+        Product and OS Dependencies by network type:
+        --------------------------------------------------+
+                                    |       Shasta        |
+        ----------------------------+---------------------+
+              craype                | >= 2.7.6            |
+        ----------------------------+---------------------+
+              cray-pals             | >= 1.0.6            |
+        ----------------------------+---------------------+
+              cray-pmi              | >= 6.0.1            |
+        ----------------------------+---------------------+
+              libfabric             | >= 1.9.0            |
+        ----------------------------+---------------------+
+      
+        One or more compilers:
+        * AMD ROCM 5.0 or later
+        * AOCC 4.1 or later
+        * CCE 17.0 or later
+        * GNU 12.3 or later
+        * Intel 2022.1 or later
+        * Nvidia 23.3 or later
+      
+      
+      Notes and Limitations:
+      ----------------------
+        Limitations in Cray MPICH 8.1.28:
+      
+            - Cray MPICH 8.1.28 can support only ~2040 simultaneous MPI
+              communicators.  This limit is less the XC Cray MPICH limit of
+              ~4090 simultaneous communicators.  Cray intends to raise the
+              limit in a future release of Cray MPICH for Shasta to at least
+              the XC limit.
+      
+      
+      Documentation:
+      --------------
+        For more information see the intro_mpi man page.
+      
+      
+      Modulefile:
+      -----------
+        module load cray-mpich/8.1.28
+      
+      
+      License:
+      --------
+        Except for the third party components and software licensed by HPE
+        through proprietary agreements, components, files or programs contained
+        within this package or product are Copyright -2021 Hewlett Packard
+        Enterprise Development LP.
+      
+        Attribution notices for open source licensed software for this 
+        package are detailed in the file:
+        /opt/cray/pe/mpich/8.1.28/ATTRIBUTIONS
+        Copyright -2023 Hewlett Packard Enterprise Development LP
+      
+      
+      ===================================================================
+      To re-display cray-mpich-abi-pre-intel-5.0/8.1.28 copyright information,
+      type:    less /opt/cray/pe/mpich/8.1.28/COPYRIGHT
+      To re-display cray-mpich-abi-pre-intel-5.0/8.1.28 release information,
+      type:    less /opt/cray/pe/mpich/8.1.28/release_info
+      ===================================================================
+      
+      
+
+
+--------------------------------------------------------------------
+  cray-mpich-ucx: cray-mpich-ucx/8.1.28
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "cray-mpich-ucx/8.1.28" module is available to load.
+
+      cray/23.12  craype-network-ucx
+ 
+    Help:
+      
+      
+      				  COPYRIGHT
+      
+      The following is a notice of limited availability of the code, and disclaimer
+      which must be included in the prologue of the code and in all source listings
+      of the code.
+      
+      Copyright Notice
+       + 2002 University of Chicago
+      
+      Permission is hereby granted to use, reproduce, prepare derivative works, and
+      to redistribute to others.  This software was authored by:
+      
+      Mathematics and Computer Science Division
+      Argonne National Laboratory, Argonne IL 60439
+      
+      (and)
+      
+      Department of Computer Science
+      University of Illinois at Urbana-Champaign
+      
+      
+      			      GOVERNMENT LICENSE
+      
+      Portions of this material resulted from work developed under a U.S.
+      Government Contract and are subject to the following license: the Government
+      is granted for itself and others acting on its behalf a paid-up, nonexclusive,
+      irrevocable worldwide license in this computer software to reproduce, prepare
+      derivative works, and perform publicly and display publicly.
+      
+      				  DISCLAIMER
+      
+      This computer code material was prepared, in part, as an account of work
+      sponsored by an agency of the United States Government.  Neither the United
+      States, nor the University of Chicago, nor any of their employees, makes any
+      warranty express or implied, or assumes any legal liability or responsibility
+      for the accuracy, completeness, or usefulness of any information, apparatus,
+      product, or process disclosed, or represents that its use would not infringe
+      privately owned rights.
+      
+      
+      Cray MPICH 8.1.28:
+      =======================================
+      
+      Release Date:
+      -------------
+        November 16, 2023
+      
+      
+      Purpose:
+      --------
+        Cray MPICH 8.1.28 is based upon ANL MPICH 3.4a2 with support for libfabric
+        and is optimized for the Cray Programming Environment.
+          
+        Major Differences Cray MPICH 8.1.28 from the XC Cray MPICH include:
+      
+            - Uses the new ANL MPICH CH4 code path and libfabric for network
+              support.
+      
+            - Does not support -default64 mode for Fortran
+      
+            - Does not support C++ language bindings
+      
+        New Cray MPICH features for HPE Cray EX and Apollo systems:
+            - Starting from the 8.1.26 release, Cray MPICH supports the Intel Sapphire Rapids CPU HBM 
+              processor architecture.
+      
+            - On systems with AMD GPUs, Cray MPICH 8.1.26 supports all ROCm
+              versions starting from ROCm 5.0, including the latest ROCm 5.5.0 
+              release. 
+       
+              The Cray MPICH 8.1.25 release and prior versions of 
+              Cray MPICH are only compatible with ROCm versions up to (and 
+              including) the ROCm 5.4.0 release.
+      
+            - Cray MPICH uses the libfabric "verbs;ofi_rxm" provider by default.
+              This is the supported and optimized OFI libfabric provider for
+              Slingshot-10 and Apollo systems.
+      
+            - Cray MPICH offers support for multiple NICs per node. Starting with
+              version 8.0.8, by default Cray MPICH will use all available NICs on
+              a node. Several rank-to-NIC assignment policies are supported. For
+              details on choosing a policy for assigning ranks to NICS, or for
+              selecting a subset of available NICs, please see the following
+              environment variables documented in the mpi man page.
+      
+              MPICH_OFI_NIC_VERBOSE
+              MPICH_OFI_NIC_POLICY
+              MPICH_OFI_NIC_MAPPING
+              MPICH_OFI_NUM_NICS
+      
+            - Enhancements to the MPICH_OFI_NIC_POLICY NUMA mode have been added.
+              Starting with version 8.0.14, if the user selects the NUMA policy,
+              the NIC closest to the rank is selected. A NIC no longer needs to
+              reside in the same numa node as the rank. If multiple NICs are
+              assigned to the same numa node, the local ranks will round-robin
+              between them. Numa distances are analyzed to select the closest NIC.
+      
+            - Cray MPICH supports creating a full connection grid during MPI_Init.
+              By default, OFI connections between ranks are set up on demand. This
+              allows for optimal performance while minimizing memory requirements.
+              However, for jobs requiring an all-to-all communication pattern, it
+              may be beneficial to create all OFI connections in a coordinated
+              manner at startup. See the MPICH_OFI_STARTUP_CONNECT description in
+              the mpi man page.
+      
+            - Cray MPICH supports runtime switching to the UCX netmod starting
+              with version 8.0.14. To do this load the craype-network-ucx module
+              and module swap between Cray-MPICH and Cray-MPICH-UCX modules.  For
+              more information including relevant environment variables reference
+              the intro_mpi man page with the Cray-MPICH-UCX module loaded.
+      
+            - Lmod support for HPE Cray EX starting with Cray MPICH 8.0.16.
+      
+      
+      Key Changes and Bugs Closed:
+      ----------------------------
+      
+         Changes in Cray MPICH 8.1.28
+      
+           New Features:
+      
+              - Cray MPICH 8.1.28 for aarch64 is in early stage of support and
+                has some issues. Setting these variables will help circumvent most
+                known issues.
+      
+                  export MPICH_SMP_SINGLE_COPY_MODE=CMA
+                  export MPICH_MALLOC_FALLBACK=1
+      
+           Bugs Fixed:
+      
+              - CAST-25354 - Add routines for querying GPU support
+              - CAST-28969 - Remove build directory rpath entries for Cray MPICH libraries
+              - CAST-33808 - Bugfix for cray-mpich-abi-pre-intel-5.0 module file
+              - CAST-34143 - Handle disparate access to XPMEM
+              - CAST-34244 - Add the MPI_T error codes to the MPICH error printer
+              - PE-48382   - Align write and read cb buffers to page size for direct_io
+              - PE-49623   - Fix triggerd op send/recv_init() code to handle sparse types
+              - PE-49624   - Fix the triggered op code to only call getenv() once
+              - PE-49625   - Return errors when triggered ops aren't supported
+              - PE-49626   - Add more error checking to trigger ops code
+              - PE-49708   - Support native sles gcc rather than Cray-gcc
+              - PE-50090   - Add error message for MPI_Open_port() without fabric support
+              - PE-50833   - Add an additional CXI counter to MPI's default set 
+              - PE-50150   - Improve handling of truncated CXI receives
+      
+      
+      Product and OS Dependencies:
+      ----------------------------
+        The Cray MPICH 8.1.28 release is supported on the following HPE systems:
+        * HPE Cray EX systems with CLE
+        * HPE Apollo systems as part of the Cray Programming Environment
+      
+        Product and OS Dependencies by network type:
+        --------------------------------------------------+
+                                    |       Shasta        |
+        ----------------------------+---------------------+
+              craype                | >= 2.7.6            |
+        ----------------------------+---------------------+
+              cray-pals             | >= 1.0.6            |
+        ----------------------------+---------------------+
+              cray-pmi              | >= 6.0.1            |
+        ----------------------------+---------------------+
+              libfabric             | >= 1.9.0            |
+        ----------------------------+---------------------+
+      
+        One or more compilers:
+        * AMD ROCM 5.0 or later
+        * AOCC 4.1 or later
+        * CCE 17.0 or later
+        * GNU 12.3 or later
+        * Intel 2022.1 or later
+        * Nvidia 23.3 or later
+      
+      
+      Notes and Limitations:
+      ----------------------
+        Limitations in Cray MPICH 8.1.28:
+      
+            - Cray MPICH 8.1.28 can support only ~2040 simultaneous MPI
+              communicators.  This limit is less the XC Cray MPICH limit of
+              ~4090 simultaneous communicators.  Cray intends to raise the
+              limit in a future release of Cray MPICH for Shasta to at least
+              the XC limit.
+      
+      
+      Documentation:
+      --------------
+        For more information see the intro_mpi man page.
+      
+      
+      Modulefile:
+      -----------
+        module load cray-mpich/8.1.28
+      
+      
+      License:
+      --------
+        Except for the third party components and software licensed by HPE
+        through proprietary agreements, components, files or programs contained
+        within this package or product are Copyright -2021 Hewlett Packard
+        Enterprise Development LP.
+      
+        Attribution notices for open source licensed software for this 
+        package are detailed in the file:
+        /opt/cray/pe/mpich/8.1.28/ATTRIBUTIONS
+        Copyright -2023 Hewlett Packard Enterprise Development LP
+      
+      
+      ===================================================================
+      To re-display cray-mpich-ucx/8.1.28 copyright information,
+      type:    less /opt/cray/pe/mpich/8.1.28/COPYRIGHT
+      To re-display cray-mpich-ucx/8.1.28 release information,
+      type:    less /opt/cray/pe/mpich/8.1.28/release_info
+      ===================================================================
+      
+      
+
+
+--------------------------------------------------------------------
+  cray-mpich-ucx-abi: cray-mpich-ucx-abi/8.1.28
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "cray-mpich-ucx-abi/8.1.28" module is available to load.
+
+      cray/23.12  craype-network-ucx
+ 
+    Help:
+      
+      
+      				  COPYRIGHT
+      
+      The following is a notice of limited availability of the code, and disclaimer
+      which must be included in the prologue of the code and in all source listings
+      of the code.
+      
+      Copyright Notice
+       + 2002 University of Chicago
+      
+      Permission is hereby granted to use, reproduce, prepare derivative works, and
+      to redistribute to others.  This software was authored by:
+      
+      Mathematics and Computer Science Division
+      Argonne National Laboratory, Argonne IL 60439
+      
+      (and)
+      
+      Department of Computer Science
+      University of Illinois at Urbana-Champaign
+      
+      
+      			      GOVERNMENT LICENSE
+      
+      Portions of this material resulted from work developed under a U.S.
+      Government Contract and are subject to the following license: the Government
+      is granted for itself and others acting on its behalf a paid-up, nonexclusive,
+      irrevocable worldwide license in this computer software to reproduce, prepare
+      derivative works, and perform publicly and display publicly.
+      
+      				  DISCLAIMER
+      
+      This computer code material was prepared, in part, as an account of work
+      sponsored by an agency of the United States Government.  Neither the United
+      States, nor the University of Chicago, nor any of their employees, makes any
+      warranty express or implied, or assumes any legal liability or responsibility
+      for the accuracy, completeness, or usefulness of any information, apparatus,
+      product, or process disclosed, or represents that its use would not infringe
+      privately owned rights.
+      
+      
+      Cray MPICH 8.1.28:
+      =======================================
+      
+      Release Date:
+      -------------
+        November 16, 2023
+      
+      
+      Purpose:
+      --------
+        Cray MPICH 8.1.28 is based upon ANL MPICH 3.4a2 with support for libfabric
+        and is optimized for the Cray Programming Environment.
+          
+        Major Differences Cray MPICH 8.1.28 from the XC Cray MPICH include:
+      
+            - Uses the new ANL MPICH CH4 code path and libfabric for network
+              support.
+      
+            - Does not support -default64 mode for Fortran
+      
+            - Does not support C++ language bindings
+      
+        New Cray MPICH features for HPE Cray EX and Apollo systems:
+            - Starting from the 8.1.26 release, Cray MPICH supports the Intel Sapphire Rapids CPU HBM 
+              processor architecture.
+      
+            - On systems with AMD GPUs, Cray MPICH 8.1.26 supports all ROCm
+              versions starting from ROCm 5.0, including the latest ROCm 5.5.0 
+              release. 
+       
+              The Cray MPICH 8.1.25 release and prior versions of 
+              Cray MPICH are only compatible with ROCm versions up to (and 
+              including) the ROCm 5.4.0 release.
+      
+            - Cray MPICH uses the libfabric "verbs;ofi_rxm" provider by default.
+              This is the supported and optimized OFI libfabric provider for
+              Slingshot-10 and Apollo systems.
+      
+            - Cray MPICH offers support for multiple NICs per node. Starting with
+              version 8.0.8, by default Cray MPICH will use all available NICs on
+              a node. Several rank-to-NIC assignment policies are supported. For
+              details on choosing a policy for assigning ranks to NICS, or for
+              selecting a subset of available NICs, please see the following
+              environment variables documented in the mpi man page.
+      
+              MPICH_OFI_NIC_VERBOSE
+              MPICH_OFI_NIC_POLICY
+              MPICH_OFI_NIC_MAPPING
+              MPICH_OFI_NUM_NICS
+      
+            - Enhancements to the MPICH_OFI_NIC_POLICY NUMA mode have been added.
+              Starting with version 8.0.14, if the user selects the NUMA policy,
+              the NIC closest to the rank is selected. A NIC no longer needs to
+              reside in the same numa node as the rank. If multiple NICs are
+              assigned to the same numa node, the local ranks will round-robin
+              between them. Numa distances are analyzed to select the closest NIC.
+      
+            - Cray MPICH supports creating a full connection grid during MPI_Init.
+              By default, OFI connections between ranks are set up on demand. This
+              allows for optimal performance while minimizing memory requirements.
+              However, for jobs requiring an all-to-all communication pattern, it
+              may be beneficial to create all OFI connections in a coordinated
+              manner at startup. See the MPICH_OFI_STARTUP_CONNECT description in
+              the mpi man page.
+      
+            - Cray MPICH supports runtime switching to the UCX netmod starting
+              with version 8.0.14. To do this load the craype-network-ucx module
+              and module swap between Cray-MPICH and Cray-MPICH-UCX modules.  For
+              more information including relevant environment variables reference
+              the intro_mpi man page with the Cray-MPICH-UCX module loaded.
+      
+            - Lmod support for HPE Cray EX starting with Cray MPICH 8.0.16.
+      
+      
+      Key Changes and Bugs Closed:
+      ----------------------------
+      
+         Changes in Cray MPICH 8.1.28
+      
+           New Features:
+      
+              - Cray MPICH 8.1.28 for aarch64 is in early stage of support and
+                has some issues. Setting these variables will help circumvent most
+                known issues.
+      
+                  export MPICH_SMP_SINGLE_COPY_MODE=CMA
+                  export MPICH_MALLOC_FALLBACK=1
+      
+           Bugs Fixed:
+      
+              - CAST-25354 - Add routines for querying GPU support
+              - CAST-28969 - Remove build directory rpath entries for Cray MPICH libraries
+              - CAST-33808 - Bugfix for cray-mpich-abi-pre-intel-5.0 module file
+              - CAST-34143 - Handle disparate access to XPMEM
+              - CAST-34244 - Add the MPI_T error codes to the MPICH error printer
+              - PE-48382   - Align write and read cb buffers to page size for direct_io
+              - PE-49623   - Fix triggerd op send/recv_init() code to handle sparse types
+              - PE-49624   - Fix the triggered op code to only call getenv() once
+              - PE-49625   - Return errors when triggered ops aren't supported
+              - PE-49626   - Add more error checking to trigger ops code
+              - PE-49708   - Support native sles gcc rather than Cray-gcc
+              - PE-50090   - Add error message for MPI_Open_port() without fabric support
+              - PE-50833   - Add an additional CXI counter to MPI's default set 
+              - PE-50150   - Improve handling of truncated CXI receives
+      
+      
+      Product and OS Dependencies:
+      ----------------------------
+        The Cray MPICH 8.1.28 release is supported on the following HPE systems:
+        * HPE Cray EX systems with CLE
+        * HPE Apollo systems as part of the Cray Programming Environment
+      
+        Product and OS Dependencies by network type:
+        --------------------------------------------------+
+                                    |       Shasta        |
+        ----------------------------+---------------------+
+              craype                | >= 2.7.6            |
+        ----------------------------+---------------------+
+              cray-pals             | >= 1.0.6            |
+        ----------------------------+---------------------+
+              cray-pmi              | >= 6.0.1            |
+        ----------------------------+---------------------+
+              libfabric             | >= 1.9.0            |
+        ----------------------------+---------------------+
+      
+        One or more compilers:
+        * AMD ROCM 5.0 or later
+        * AOCC 4.1 or later
+        * CCE 17.0 or later
+        * GNU 12.3 or later
+        * Intel 2022.1 or later
+        * Nvidia 23.3 or later
+      
+      
+      Notes and Limitations:
+      ----------------------
+        Limitations in Cray MPICH 8.1.28:
+      
+            - Cray MPICH 8.1.28 can support only ~2040 simultaneous MPI
+              communicators.  This limit is less the XC Cray MPICH limit of
+              ~4090 simultaneous communicators.  Cray intends to raise the
+              limit in a future release of Cray MPICH for Shasta to at least
+              the XC limit.
+      
+      
+      Documentation:
+      --------------
+        For more information see the intro_mpi man page.
+      
+      
+      Modulefile:
+      -----------
+        module load cray-mpich/8.1.28
+      
+      
+      License:
+      --------
+        Except for the third party components and software licensed by HPE
+        through proprietary agreements, components, files or programs contained
+        within this package or product are Copyright -2021 Hewlett Packard
+        Enterprise Development LP.
+      
+        Attribution notices for open source licensed software for this 
+        package are detailed in the file:
+        /opt/cray/pe/mpich/8.1.28/ATTRIBUTIONS
+        Copyright -2023 Hewlett Packard Enterprise Development LP
+      
+      
+      ===================================================================
+      To re-display cray-mpich-ucx-abi/8.1.28 copyright information,
+      type:    less /opt/cray/pe/mpich/8.1.28/COPYRIGHT
+      To re-display cray-mpich-ucx-abi/8.1.28 release information,
+      type:    less /opt/cray/pe/mpich/8.1.28/release_info
+      ===================================================================
+      
+      
+
+
+--------------------------------------------------------------------
+  cray-mpixlate: cray-mpixlate/1.0.3
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "cray-mpixlate/1.0.3" module is available to load.
+
+      cray/23.12  gcc-native/12.3  cray-mpich/8.1.28
+ 
+    Help:
+      Copyright 2022-2023 Hewlett Packard Enterprise Development LP
+      
+      MPIxlate: Application Binary Interface (ABI) translator for MPI programs
+      
+      
+      
+      See mpixlate(1) for details.
+      
+      Copyright 2022-2023 Hewlett Packard Enterprise Development LP
+      
+      
+      Product Release Information
+      ================================================================================
+      
+      Product identification:
+      -----------------------
+          HPE Cray MPIxlate: version 1.0.3 (built on 2023-11-16T23:08:27Z from f9e6be1)
+      
+      
+      Purpose:
+      --------
+          HPE Cray MPIxlate enables applications compiled using an MPI library that
+          is not binary compatible with HPE Cray MPI, to be run without recompilation
+          on supported HPE platforms.
+      
+      
+      Warnings & Limitations:
+      -----------------------
+          - See NOTES in mpixlate(1)
+      
+      
+      Changes from previous release: 
+      ------------------------------
+          - New features:
+            * None
+      
+          - Defects Fixed:
+            * None
+      
+      
+      Platform, Operating System and Product dependencies:
+      ----------------------------------------------------
+          Supported HPE platforms:
+          - HPE Cray EX systems with HPCM or CSM
+      
+          Supported Operating Systems:
+          - SLES 15 SP4, SP5
+          - COS 2.5, 23.11
+      
+          Product dependencies:
+            -----------------+----------
+            cray-mpich[-ucx] | >= 8.1.28
+            -----------------+----------
+      
+      
+      Documentation:
+      --------------
+          mpixlate(1)
+      
+      
+      Environment Modules
+      -------------------
+          module load cray-mpixlate/1.0.3
+      ================================================================================
+      
+      
+      
+      To display copyright information for cray-mpixlate/1.0.3
+      type:    less /opt/cray/pe/mpixlate/1.0.3/COPYRIGHT
+      
+      To display release information for cray-mpixlate/1.0.3
+      type:    less /opt/cray/pe/mpixlate/1.0.3/doc/release_info
+      
+      
+
+
+--------------------------------------------------------------------
+  hpcx-debug-ompi: hpcx-debug-ompi
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "hpcx-debug-ompi" module is available to load.
+
+      cray/23.12  nvhpc-hpcx-cuda11/24.3
+      cray/23.12  nvhpc-hpcx-cuda12/24.3
+ 
+
+--------------------------------------------------------------------
+  hpcx-mt-ompi: hpcx-mt-ompi
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "hpcx-mt-ompi" module is available to load.
+
+      cray/23.12  nvhpc-hpcx-cuda11/24.3
+      cray/23.12  nvhpc-hpcx-cuda12/24.3
+ 
+
+--------------------------------------------------------------------
+  hpcx-ompi: hpcx-ompi
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "hpcx-ompi" module is available to load.
+
+      cray/23.12  nvhpc-hpcx-cuda11/24.3
+      cray/23.12  nvhpc-hpcx-cuda12/24.3
+ 
+
+--------------------------------------------------------------------
+  hpcx-prof-ompi: hpcx-prof-ompi
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "hpcx-prof-ompi" module is available to load.
+
+      cray/23.12  nvhpc-hpcx-cuda11/24.3
+      cray/23.12  nvhpc-hpcx-cuda12/24.3
+ 
+
+--------------------------------------------------------------------
+  nvhpc-byo-compiler: nvhpc-byo-compiler/24.3
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "nvhpc-byo-compiler/24.3" module is available to load.
+
+      cray/23.12
+ 
+
+--------------------------------------------------------------------
+  nvhpc-nompi: nvhpc-nompi/24.3
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "nvhpc-nompi/24.3" module is available to load.
+
+      cray/23.12
+ 
+
+--------------------------------------------------------------------
+  nvhpc-openmpi3: nvhpc-openmpi3/24.3
+--------------------------------------------------------------------
+
+    You will need to load all module(s) on any one of the lines below before the "nvhpc-openmpi3/24.3" module is available to load.
+
+      cray/23.12
+ 
+
+ 
+

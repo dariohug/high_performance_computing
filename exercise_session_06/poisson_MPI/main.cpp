@@ -39,7 +39,8 @@ int main(int argc, char *argv[]){
     jacobi_step(p, u_new, u_old, f, my_rank, size);
 
     // // Compute differences and norm
-    double diff = norm_diff(p, u_new, u_old);
+    // Add rank to call
+    double diff = norm_diff(p, u_new, u_old, my_rank);
 
     printf("I am total square differences: %g\n",diff);
 
@@ -49,7 +50,7 @@ int main(int argc, char *argv[]){
     // // Main loop for the Jacobi iterations
     while (diff>p.tol && nstep<p.nstep_max){
         jacobi_step(p, u_new, u_old, f,  my_rank, size);
-        diff = norm_diff(p, u_new, u_old);
+        diff = norm_diff(p, u_new, u_old, my_rank);
         nstep++;
         printf("Step %d, Diff=%g\n", nstep, diff);
         if (nstep%p.foutput==0) output(p, nstep, u_new, my_rank);
