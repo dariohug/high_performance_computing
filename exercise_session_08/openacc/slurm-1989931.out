@@ -1,0 +1,7 @@
+cpi_openacc.c:
+gettime.c:
+PI = 3.141592653589793 computed in 3.4 seconds
+PI = 3.141592653589793 computed in 0.001152 seconds
+PI = 3.141592653589793 computed in 0.001141 seconds
+PI = 3.141592653589793 computed in 0.001141 seconds
+PI = 3.141592653589793 computed in 0.001144 seconds
