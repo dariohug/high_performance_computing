@@ -1,0 +1,26 @@
+Unloading the cpe module is insufficient to restore the system defaults.
+Please run 'source
+/opt/cray/pe/cpe/23.12/restore_lmod_system_defaults.[csh|sh]'. 
+
+Lmod is automatically replacing "cce/17.0.0" with "nvhpc/24.3".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.5.0" with "PrgEnv-nvhpc/8.5.0".
+
+Lmod has detected the following error: These module(s) or extension(s) exist
+but cannot be loaded as requested: "cray-libsci", "cray-mpich"
+   Try: "module spider cray-libsci cray-mpich" to see how to load the
+module(s).
+
+
+
+make: Nothing to be done for 'all'.
+
+memcopy and daxpy test of size 8
+-------
+timings
+-------
+axpy (openmp): 0.062006 s
+axpy (openacc): 0.000152796 s
+
+============ PASSED

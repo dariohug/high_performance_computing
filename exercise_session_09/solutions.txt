@@ -1,0 +1,32 @@
+Task 1: - AXPY
+
+2^1: 
+memcopy and daxpy test of size 1
+-------
+timings
+-------
+axpy (openmp): 0.0621084 s
+axpy (openacc): 0.0132508 s
+
+2^24: 
+
+memcopy and daxpy test of size 16777216
+-------
+timings
+-------
+axpy (openmp): 0.0750692 s
+axpy (openacc): 0.025596 s
+
+2^30: 
+memcopy and daxpy test of size 1073741824
+-------
+timings
+-------
+axpy (openmp): 0.113777 s
+axpy (openacc): 0.69391 s
+
+The GPU code creates lots of overhead since it has to copy memory between CPU and GPU. 
+With bigger calculations this still makes sence since its much faster than the CPU code. 
+But i have to say... I am surprised by the speed of the CPU here. 
+
+
