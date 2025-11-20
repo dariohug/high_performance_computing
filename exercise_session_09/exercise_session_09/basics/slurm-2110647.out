@@ -1,0 +1,20 @@
+Unloading the cpe module is insufficient to restore the system defaults.
+Please run 'source
+/opt/cray/pe/cpe/23.12/restore_lmod_system_defaults.[csh|sh]'. 
+
+Lmod is automatically replacing "PrgEnv-cray/8.5.0" with "PrgEnv-nvhpc/8.5.0".
+
+
+Lmod is automatically replacing "cce/17.0.0" with "nvhpc/24.3".
+
+
+Inactive Modules:
+  1) cray-libsci/23.12.5     2) cray-mpich/8.1.28
+
+make: Nothing to be done for 'all'.
+dispersion 1D test of length n = 67108868 : 512MB
+==== Validation: host vs GPU naive: success ====
+==== Validation: host vs GPU no copies: success ====
+Host version took 0.892558 s (0.00892558 s/step)
+GPU naive version took 22.953 s (0.22953 s/step)
+GPU no-copies version took 22.9055 s (0.229055 s/step)

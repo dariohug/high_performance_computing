@@ -1,0 +1,10 @@
+make: Nothing to be done for 'all'.
+
+memcopy and daxpy test of size 16777216
+-------
+timings
+-------
+axpy (openmp): 0.0750692 s
+axpy (openacc): 0.025596 s
+
+============ PASSED

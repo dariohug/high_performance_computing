@@ -1,0 +1,30 @@
+Unloading the cpe module is insufficient to restore the system defaults.
+Please run 'source
+/opt/cray/pe/cpe/23.12/restore_lmod_system_defaults.[csh|sh]'. 
+
+Lmod is automatically replacing "PrgEnv-cray/8.5.0" with "PrgEnv-nvhpc/8.5.0".
+
+
+Lmod is automatically replacing "cce/17.0.0" with "nvhpc/24.3".
+
+
+Inactive Modules:
+  1) cray-libsci/23.12.5     2) cray-mpich/8.1.28
+
+nvc++ -I../common -O3 -acc -mp -Minfo=acc -std=c++11 -gpu=cc90 dot_openacc.cpp -o dot.openacc 
+dot_gpu(double const*, double const*, int):
+     19, Generating implicit copy(sum) [if not already present]
+         Generating copyin(y[:n],x[:n]) [if not already present]
+         Generating implicit firstprivate(n)
+         Generating NVIDIA GPU code
+         22, #pragma acc loop gang, vector(128) /* blockIdx.x threadIdx.x */
+             Generating reduction(+:sum)
+dispersion 1D test of length n = 16777220 : 128MB
+==== Validation: host vs GPU naive: success ====
+==== Validation: host vs GPU no copies: success ====
+Host version took 2.76802 s (0.00138401 s/step)
+GPU naive version took 91.0069 s (0.0455035 s/step)
+GPU no-copies version took 91.1471 s (0.0455735 s/step)
+
+
+-> I dont understand

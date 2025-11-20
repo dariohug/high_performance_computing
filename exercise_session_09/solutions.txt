@@ -30,3 +30,48 @@ With bigger calculations this still makes sence since its much faster than the C
 But i have to say... I am surprised by the speed of the CPU here. 
 
 
+Task 2: basics and blur
+
+a) The naive approach is inefficient since it copy memory to the device and back to the CPU for every single timestep. 
+
+
+b) The second appraoch implements data persistance. It allocates a permanenet buffer on the GPU and therefore saves a lot of time which is otherwise wasted on transport. We use pointers to acces the GPU Mem. 
+
+c) 
+dispersion 1D test of length n = 1048580 : 8.00003MB
+==== Validation: host vs GPU naive: success ====
+==== Validation: host vs GPU no copies: success ====
+Host version took 1.01876 s (0.00101876 s/step)
+GPU naive version took 1.63061 s (0.00163061 s/step)
+GPU no-copies version took 1.50789 s (0.00150789 s/step)
+
+Larger computations: 
+
+
+
+Task 3: Dot Product
+
+a) Multiple Threads from the GPU have acces to the Sum Variable. This breaks the code. 
+
+b) reduction(+:sum) -> This acumulates partial sums from all GPU threads.
+
+C) 
+
+dispersion 1D test of length n = 1048580 : 8.00003MB
+==== Validation: host vs GPU naive: success ====
+==== Validation: host vs GPU no copies: success ====
+Host version took 0.168655 s (0.00168655 s/step)
+GPU naive version took 0.251036 s (0.00251036 s/step)
+GPU no-copies version took 0.258569 s (0.00258569 s/step)
+
+Larger: 
+dispersion 1D test of length n = 67108868 : 512MB
+==== Validation: host vs GPU naive: success ====
+==== Validation: host vs GPU no copies: success ====
+Host version took 0.892558 s (0.00892558 s/step)
+GPU naive version took 22.953 s (0.22953 s/step)
+GPU no-copies version took 22.9055 s (0.229055 s/step)
+
+
+--> I seem to not understadn something. My GPU code generally runs slower than my CPU code. 
+--> No more time left for me. 
