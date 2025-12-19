@@ -1,0 +1,47 @@
+Running the Map&Reduce on Hadoop: 
+- Map input records=35371
+- Map output records=538568
+- Reduce output records=47090
+
+- Launched map tasks=7
+- Launched reduce tasks=1
+
+- Output Folder: output (on the HDFS) 
+
+Found 2 items
+-rw-r--r--   3 ubuntu supergroup          0 2025-12-19 10:58 /user/ubuntu/output/_SUCCESS
+-rw-r--r--   3 ubuntu supergroup     642476 2025-12-19 10:58 /user/ubuntu/output/part-00000
+
+Part of the word count output: 
+relax	1
+“relentlessly	1
+“remains	1
+“remember	5
+“renovations	1
+“repairs	1
+“repmattsalmon	1
+“representing	1
+“rescinding”	1
+“respectfully	1
+
+2025-12-19 11:13:17,030 INFO mapreduce.Job:  map 0% reduce 0%
+2025-12-19 11:13:27,134 INFO mapreduce.Job:  map 14% reduce 0%
+2025-12-19 11:13:31,155 INFO mapreduce.Job:  map 29% reduce 0%
+2025-12-19 11:13:34,175 INFO mapreduce.Job:  map 43% reduce 0%
+2025-12-19 11:13:37,192 INFO mapreduce.Job:  map 71% reduce 0%
+2025-12-19 11:13:38,241 INFO mapreduce.Job:  map 86% reduce 0%
+2025-12-19 11:13:39,245 INFO mapreduce.Job:  map 100% reduce 0%
+2025-12-19 11:13:41,251 INFO mapreduce.Job:  map 100% reduce 100%
+2025-12-19 11:13:42,260 INFO mapreduce.Job: Job job_1766137197910_0009 completed successfully
+2025-12-19 11:13:42,322 INFO mapreduce.Job: Counters: 55
+
+
+Word count: 
+hdfs dfs -count -q /user/ubuntu/output/part-00000
+	        none             inf            none             inf            0            1             642476 /user/ubuntu/output/part-00000
+
+Files over hadoop: 
+I found the files under: http://localhost:9870/explorer.html#/user/ubuntu/output
+
+When i ran map&Reduce locally I also sorted the output under output_sorted.txt
+
